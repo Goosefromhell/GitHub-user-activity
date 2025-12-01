@@ -18,7 +18,7 @@ public class Main {
     static void main(String[] args) {
 
 
-        Path target = Path.of(System.getProperty("user.home"), "Buffers", "GitHubUserActivity", "test.json");
+        Path target = Path.of(System.getProperty("user.home"), "Buffers", "GitHubUserActivity", "activity.json");
 
         try {
             String user = String.format("https://api.github.com/users/%s/events", args[0]);
