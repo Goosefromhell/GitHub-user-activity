@@ -50,7 +50,6 @@ public class Main {
 
                     HashMap<String, Integer> amount_of_pushes = new HashMap<>();
                     ArrayList<String> repos_created = new ArrayList<>();
-                    HashMap<String, Integer> amount_of_pull_requests_reviews = new HashMap<>();
 
 
                     for (JsonNode kal : jsonNode) {
@@ -62,18 +61,26 @@ public class Main {
                         } else if (kal.get("type").asString().equals("PullRequestEvent")) {
                             switch (kal.get("payload").get("action").asString()) {
                                 case "opened" ->
-                                        System.out.printf("Opened new pullrequest in %s \n", kal.get("repo").get("name"));
+                                        System.out.printf("Opened new pull request in %s \n", kal.get("repo").get("name"));
                                 case "closed" ->
-                                        System.out.printf("Closed pullrequest in %s \n", kal.get("repo").get("name"));
+                                        System.out.printf("Closed pull request in %s \n", kal.get("repo").get("name"));
                                 case "reopened" ->
-                                        System.out.printf("Reopened  pullrequest in %s \n", kal.get("repo").get("name"));
+                                        System.out.printf("Reopened  pull request in %s \n", kal.get("repo").get("name"));
                                 default -> System.out.println("Unknown action");
 
                             }
 
                         } else if (kal.get("type").asString().equals("PullRequestReviewEvent")) {
-                            String repo_name = kal.get("repo").get("name").asString();
-                            amount_of_pull_requests_reviews.put(repo_name, amount_of_pull_requests_reviews.getOrDefault(repo_name, 0) + 1);
+                            switch (kal.get("payload").get("action").asString()) {
+                                case "created" ->
+                                        System.out.printf("Created new pull request review in %s \n", kal.get("repo").get("name"));
+                                case "updated" ->
+                                        System.out.printf("Updated pull request review in %s \n", kal.get("repo").get("name"));
+                                case "dismissed" ->
+                                        System.out.printf("Dismissed pull request review in %s \n", kal.get("repo").get("name"));
+                                default -> System.out.println("Unknown action");
+
+                            }
 
                         } else if (kal.get("type").asString().equals("IssuesEvent")) {
                             switch (kal.get("payload").get("action").asString()) {
@@ -97,9 +104,6 @@ public class Main {
                         System.out.printf("Started %s \n", repo_name);
                     }
 
-                    for (Map.Entry<String, Integer> entry : amount_of_pull_requests_reviews.entrySet()) {
-                        System.out.printf("Reviewed %d requests in %s repositories \n", entry.getValue(), entry.getKey());
-                    }
 
                 }
             } catch (InterruptedException | IOException e) {
