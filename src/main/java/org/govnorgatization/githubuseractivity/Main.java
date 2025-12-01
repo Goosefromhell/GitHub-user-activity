@@ -58,7 +58,7 @@ public class Main {
 
 
         } catch (Exception e) {
-            System.out.println("something went wronk");
+            System.out.println("something went wrong");
         }
 
     }
