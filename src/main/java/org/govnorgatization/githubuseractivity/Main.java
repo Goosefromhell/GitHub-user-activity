@@ -50,7 +50,6 @@ public class Main {
 
                     HashMap<String, Integer> amount_of_pushes = new HashMap<>();
                     ArrayList<String> repos_created = new ArrayList<>();
-                    HashMap<String, Integer> amount_of_pull_requests = new HashMap<>();
                     HashMap<String, Integer> amount_of_pull_requests_reviews = new HashMap<>();
 
 
