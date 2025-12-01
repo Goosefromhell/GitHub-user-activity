@@ -36,6 +36,8 @@ public class Main {
 
             HashMap<String, Integer> amount_of_pushes = new HashMap<>();
             ArrayList<String> repos_created = new ArrayList<>();
+            HashMap<String, Integer> amount_of_pull_requests = new HashMap<>();
+            HashMap<String, Integer> amount_of_pull_requests_rewiews = new HashMap<>();
 
 
             for (JsonNode kal : jsonNode) {
@@ -44,6 +46,14 @@ public class Main {
                     amount_of_pushes.put(repo_name, amount_of_pushes.getOrDefault(repo_name, 0) + 1);
                 } else if (kal.get("type").asString().equals("CreateEvent")) {
                     repos_created.add(kal.get("repo").get("name").asString());
+                } else if (kal.get("type").asString().equals("PullRequestEvent")) {
+                    String repo_name = kal.get("repo").get("name").asString();
+                    amount_of_pull_requests.put(repo_name, amount_of_pull_requests.getOrDefault(repo_name, 0) + 1);
+
+                } else if (kal.get("type").asString().equals("PullRequestReviewEvent")) {
+                    String repo_name = kal.get("repo").get("name").asString();
+                    amount_of_pull_requests_rewiews.put(repo_name, amount_of_pull_requests_rewiews.getOrDefault(repo_name, 0) + 1);
+
                 }
 
             }
@@ -54,7 +64,13 @@ public class Main {
             for (String repo_name : repos_created) {
                 System.out.printf("Started %s \n", repo_name);
             }
+            for (Map.Entry<String, Integer> entry : amount_of_pull_requests.entrySet()) {
+                System.out.printf("Pull requests opened %d in %s \n", entry.getValue(), entry.getKey());
+            }
 
+            for (Map.Entry<String, Integer> entry : amount_of_pull_requests_rewiews.entrySet()) {
+                System.out.printf("Reviewed %d requests in %s repositories \n", entry.getValue(), entry.getKey());
+            }
 
         } catch (Exception e) {
             System.out.println("something went wrong");
