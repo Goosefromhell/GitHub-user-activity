@@ -97,9 +97,6 @@ public class Main {
                     for (String repo_name : repos_created) {
                         System.out.printf("Started %s \n", repo_name);
                     }
-//                        for (Map.Entry<String, Integer> entry : amount_of_pull_requests.entrySet()) {
-//                            System.out.printf("Pull requests opened %d in %s \n", entry.getValue(), entry.getKey());
-//                        }
 
                     for (Map.Entry<String, Integer> entry : amount_of_pull_requests_reviews.entrySet()) {
                         System.out.printf("Reviewed %d requests in %s repositories \n", entry.getValue(), entry.getKey());
